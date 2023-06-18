@@ -159,3 +159,79 @@ function f1(obj) {
 }
 
 // good
+function f2(obj) {
+    const key = Object.prototype.hasOwnProperty.call(obj, 'keu') ? obj.key : 1;
+}
+
+// Never reassign parameters.
+// Why? Reassigning parameters can lead to unexected behaviour, especially when accessing the
+// arguments object. It can also cause optimization issues, especially in V8.
+// bad
+function f1(a) {
+    a = 1;
+    // ...
+}
+
+function f2(a) {
+    if (!a) { a = 1; }
+    // ...
+}
+
+// good
+function f3(a) {
+    const b = a || 1;
+    // ...
+}
+
+function f4(a = 1) {
+    // ...
+}
+
+
+// Prefer the use of the spread operator ... to call variadic functions.
+// Why? It's cleaner, you don't need to supply a context, and you can not easily compose new with apply.
+// bad
+const x = [1, 2, 3, 4, 5];
+console.log.apply(console, x);
+
+// good
+const x = [1, 2, 3, 4, 5];
+console.log(...x);
+
+// bad
+new (Function.prototype.bind.apply(Date, [null, 2016, 8, 5]));
+
+// good
+new Date(...[2016, 8, 5]);
+
+
+// Functions with multiline signatures, or invocations, should be indented just like every other multiline
+// list in this guide: with each item on a line by itself, with a trailing comma on the last item.
+// bad
+function foo(bar,
+             baz,
+             quux) {
+    // ...
+}
+
+// good
+function foo(
+    bar,
+    baz,
+    quux,
+) {
+    // ...
+}
+
+// bad
+console.log(foo,
+    bar,
+    baz);
+
+// good
+console.log(
+    foo,
+    bar,
+    baz,
+);
+
