@@ -119,5 +119,5 @@ createHero(
     firstName,
     lastName,
     inventorOf,
-    ...heroArgs
-);
+    ...heroArgs;
+)
